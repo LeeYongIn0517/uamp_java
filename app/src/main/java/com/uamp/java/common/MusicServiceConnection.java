@@ -39,18 +39,18 @@ import java.util.List;
  */
 public class MusicServiceConnection {
     private static volatile MusicServiceConnection instance;
+    public final MutableLiveData<Boolean> isConnected = new MutableLiveData<>();
+    public final MutableLiveData<Boolean> networkFailure = new MutableLiveData<>();
+    public final String rootMediaId;
+    public final MutableLiveData<PlaybackStateCompat> playbackState = new MutableLiveData<>();
+    public final MutableLiveData<MediaMetadataCompat> nowPlaying = new MutableLiveData<>();
     @SuppressWarnings("PropertyName")
     final PlaybackStateCompat EMPTY_PLAYBACK_STATE = new PlaybackStateCompat.Builder().setState(PlaybackStateCompat.STATE_ERROR, 0, 0f).build();
     @SuppressWarnings("PropertyName")
     final MediaMetadataCompat NOTHING_PLAYING = new MediaMetadataCompat.Builder().putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, "").putLong(MediaMetadataCompat.METADATA_KEY_DURATION, 0).build();
-    final MutableLiveData<Boolean> isConnected = new MutableLiveData<>();
-    final MutableLiveData<Boolean> networkFailure = new MutableLiveData<>();
-    final String rootMediaId;
-    final MutableLiveData<PlaybackStateCompat> playbackState = new MutableLiveData<>();
-    final MutableLiveData<MediaMetadataCompat> nowPlaying = new MutableLiveData<>();
     private final MusicServiceConnection.MediaBrowserConnectionCallback mediaBrowserConnectionCallback;
     private final MediaBrowserCompat mediaBroswer;
-    MediaControllerCompat.TransportControls transportControls;
+    public MediaControllerCompat.TransportControls transportControls;
     private MediaControllerCompat mediaController;
 
     public MusicServiceConnection(Context context, ComponentName serviceComponent) {
